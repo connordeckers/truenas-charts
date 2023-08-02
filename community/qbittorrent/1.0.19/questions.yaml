@@ -1,3 +1,4 @@
+---
 groups:
   - name: qBittorrent Configuration
     description: Configure qBittorrent
@@ -9,17 +10,12 @@ groups:
     description: Configure Storage for qBittorrent
   - name: Resources Configuration
     description: Configure Resources for qBittorrent
-
 portals:
   web_portal:
-    protocols:
-      - "$kubernetes-resource_configmap_portal_protocol"
-    host:
-      - "$kubernetes-resource_configmap_portal_host"
-    ports:
-      - "$kubernetes-resource_configmap_portal_port"
-    path: "$kubernetes-resource_configmap_portal_path"
-
+    protocols: [$kubernetes-resource_configmap_portal_protocol]
+    host: [$kubernetes-resource_configmap_portal_host]
+    ports: [$kubernetes-resource_configmap_portal_port]
+    path: $kubernetes-resource_configmap_portal_path
 questions:
   - variable: qbitConfig
     label: ""
@@ -49,7 +45,6 @@ questions:
                       schema:
                         type: string
                         required: true
-
   - variable: qbitRunAs
     label: ""
     group: User and Group Configuration
@@ -72,7 +67,6 @@ questions:
             min: 2
             default: 568
             required: true
-
   - variable: qbitNetwork
     label: ""
     group: Network Configuration
@@ -90,7 +84,9 @@ questions:
             required: true
         - variable: btPort
           label: BT Port
-          description: The port for the qBittorrent BitTorrent protocol. Both TCP and UDP
+          description:
+            The port for the qBittorrent BitTorrent protocol. Both TCP
+            and UDP
           schema:
             type: int
             default: 50413
@@ -104,7 +100,6 @@ questions:
           schema:
             type: boolean
             default: false
-
   - variable: qbitStorage
     label: ""
     group: Storage Configuration
@@ -130,23 +125,26 @@ questions:
                     - value: hostPath
                       description: Host Path (Path that already exists on the system)
                     - value: ixVolume
-                      description: ixVolume (Dataset created automatically by the system)
+                      description:
+                        ixVolume (Dataset created automatically by the
+                        system)
               - variable: datasetName
                 label: Dataset Name
                 schema:
                   type: string
-                  show_if: [["type", "=", "ixVolume"]]
+                  show_if:
+                    - [type, "=", ixVolume]
                   required: true
                   hidden: true
                   immutable: true
                   default: downloads
-                  $ref:
-                    - "normalize/ixVolume"
+                  $ref: [normalize/ixVolume]
               - variable: hostPath
                 label: Host Path
                 schema:
                   type: hostpath
-                  show_if: [["type", "=", "hostPath"]]
+                  show_if:
+                    - [type, "=", hostPath]
                   immutable: true
                   required: true
         - variable: config
@@ -168,26 +166,28 @@ questions:
                     - value: hostPath
                       description: Host Path (Path that already exists on the system)
                     - value: ixVolume
-                      description: ixVolume (Dataset created automatically by the system)
+                      description:
+                        ixVolume (Dataset created automatically by the
+                        system)
               - variable: datasetName
                 label: Dataset Name
                 schema:
                   type: string
-                  show_if: [["type", "=", "ixVolume"]]
+                  show_if:
+                    - [type, "=", ixVolume]
                   required: true
                   hidden: true
                   immutable: true
                   default: config
-                  $ref:
-                    - "normalize/ixVolume"
+                  $ref: [normalize/ixVolume]
               - variable: hostPath
                 label: Host Path
                 schema:
                   type: hostpath
-                  show_if: [["type", "=", "hostPath"]]
+                  show_if:
+                    - [type, "=", hostPath]
                   immutable: true
                   required: true
-
   - variable: resources
     label: Resources Configuration
     group: Resources Configuration
@@ -205,13 +205,13 @@ questions:
                 schema:
                   type: string
                   max_length: 6
-                  valid_chars: '^(0\.[1-9]|[1-9][0-9]*)(\.[0-9]|m?)$'
+                  valid_chars: ^(0\.[1-9]|[1-9][0-9]*)(\.[0-9]|m?)$
                   valid_chars_error: |
                     Valid CPU limit formats are</br>
                     - Plain Integer - eg. 1</br>
                     - Float - eg. 0.5</br>
                     - Milicpu - eg. 500m
-                  default: "4000m"
+                  default: 4000m
                   required: true
               - variable: memory
                 label: Memory
@@ -219,12 +219,12 @@ questions:
                 schema:
                   type: string
                   max_length: 12
-                  valid_chars: '^[1-9][0-9]*([EPTGMK]i?|e[0-9]+)?$'
+                  valid_chars: ^[1-9][0-9]*([EPTGMK]i?|e[0-9]+)?$
                   valid_chars_error: |
                     Valid Memory limit formats are</br>
                     - Suffixed with E/P/T/G/M/K - eg. 1G</br>
                     - Suffixed with Ei/Pi/Ti/Gi/Mi/Ki - eg. 1Gi</br>
                     - Plain Integer in bytes - eg. 1024</br>
                     - Exponent - eg. 134e6
-                  default: "8Gi"
+                  default: 8Gi
                   required: true

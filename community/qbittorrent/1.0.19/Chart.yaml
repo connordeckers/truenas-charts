@@ -1,16 +1,18 @@
-name: qbittorrent
-description: The qBittorrent project aims to provide an open-source software alternative to µTorrent.
+---
+name: qbittorrent-flood
+description:
+  The qBittorrent project aims to provide an open-source software alternative
+  to µTorrent.
 annotations:
-  title: qBittorrent
+  title: qBittorrent|Flood
 type: application
 version: 1.0.19
 apiVersion: v2
 appVersion: 4.5.4
-kubeVersion: '>=1.16.0-0'
+kubeVersion: ">=1.16.0-0"
 maintainers:
-  - name: truenas
-    url: https://www.truenas.com/
-    email: dev@ixsystems.com
+  - name: Connor Deckers
+    email: dronnoc@gmail.com
 dependencies:
   - name: common
     repository: file://../../../common
@@ -21,7 +23,4 @@ sources:
   - https://github.com/onedr0p/containers/tree/main/apps/qbittorrent
   - https://github.com/truenas/charts/tree/master/community/qbittorrent
   - https://www.qbittorrent.org/
-keywords:
-  - media
-  - torrent
-  - download
+keywords: [media, torrent, download]
